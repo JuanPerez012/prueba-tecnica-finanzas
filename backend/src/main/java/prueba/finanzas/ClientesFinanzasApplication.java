@@ -1,4 +1,4 @@
-package prueba_tecnica.clientes_finanzas;
+package prueba.finanzas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
