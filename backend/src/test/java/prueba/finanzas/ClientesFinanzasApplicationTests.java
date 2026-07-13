@@ -1,4 +1,4 @@
-package prueba_tecnica.clientes_finanzas;
+package pruebatecnica.clientesfinanzas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
