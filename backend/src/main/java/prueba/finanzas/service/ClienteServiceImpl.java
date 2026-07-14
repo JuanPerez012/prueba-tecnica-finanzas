@@ -14,14 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import prueba.finanzas.repository.ClienteRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 
-/**
- * Capa: Service. Contiene las reglas de negocio de Cliente.
- * Las transacciones aseguran atomicidad (propiedad "A" de ACID) para
- * cada operación de escritura.
- */
 @Service
 @RequiredArgsConstructor
 public class ClienteServiceImpl implements ClienteService {
@@ -66,6 +62,7 @@ public class ClienteServiceImpl implements ClienteService {
         validarUnicidadParaActualizacion(id, request.getNumeroIdentificacion(), request.getCorreoElectronico());
 
         clienteMapper.actualizarEntity(cliente, request);
+        cliente.setFechaModificacion(LocalDateTime.now());
         Cliente actualizado = clienteRepository.save(cliente);
         return clienteMapper.toResponse(actualizado);
     }
@@ -83,8 +80,6 @@ public class ClienteServiceImpl implements ClienteService {
 
         clienteRepository.delete(cliente);
     }
-
-    // ---- Helpers privados de dominio ----
 
     private Cliente buscarClienteOLanzarExcepcion(Long id) {
         return clienteRepository.findById(id)
