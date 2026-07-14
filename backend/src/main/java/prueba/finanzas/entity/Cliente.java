@@ -7,14 +7,6 @@ import prueba.finanzas.enums.TipoIdentificacion;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * Entidad Cliente.
- *
- * Capa: Entity (persistencia). No contiene lógica de negocio salvo el
- * cálculo automático de fechaCreacion / fechaModificacion, que es una
- * responsabilidad propia del ciclo de vida de la entidad (JPA lifecycle
- * callbacks), no una regla de negocio de dominio.
- */
 @Entity
 @Table(
     name = "clientes",

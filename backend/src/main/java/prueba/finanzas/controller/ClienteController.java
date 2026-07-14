@@ -13,11 +13,6 @@ import prueba.finanzas.service.ClienteService;
 import java.net.URI;
 import java.util.List;
 
-/**
- * Capa: Controller. Expone el CRUD de Cliente como servicio REST.
- * Toda la validación de entrada se delega en Bean Validation (@Valid)
- * y toda la lógica de negocio se delega en ClienteService.
- */
 @RestController
 @RequestMapping("/api/v1/clientes")
 @RequiredArgsConstructor

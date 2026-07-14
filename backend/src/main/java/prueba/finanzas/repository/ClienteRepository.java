@@ -5,10 +5,6 @@ import prueba.finanzas.entity.Cliente;
 
 import java.util.Optional;
 
-/**
- * Capa: Repository. Spring Data JPA genera la implementación en tiempo
- * de ejecución (DML/DDL delegados a Hibernate según ddl-auto=update).
- */
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     Optional<Cliente> findByNumeroIdentificacion(String numeroIdentificacion);

@@ -8,11 +8,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-/**
- * DTO de actualización. Se usa en PUT (reemplazo completo de los datos
- * editables del cliente). id, fechaCreacion y fechaModificacion nunca
- * se reciben del cliente HTTP: se preservan/recalculan en el servidor.
- */
 @Getter
 @Setter
 public class ClienteUpdateRequest {
