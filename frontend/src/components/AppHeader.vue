@@ -11,6 +11,7 @@ const route = useRoute()
     <nav v-if="route.name !== 'inicio'" class="app-header__nav" aria-label="Navegación principal">
       <RouterLink to="/clientes" class="app-header__link">Clientes</RouterLink>
       <RouterLink to="/productos" class="app-header__link">Productos</RouterLink>
+      <RouterLink to="/transacciones" class="app-header__link">Transacciones</RouterLink>
     </nav>
   </header>
 </template>

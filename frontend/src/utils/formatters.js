@@ -71,3 +71,19 @@ export function formatMoneda(valor) {
     maximumFractionDigits: 0
   }).format(valor)
 }
+
+export const TIPOS_TRANSACCION = [
+  { value: 'CONSIGNACION', label: 'Consignación' },
+  { value: 'RETIRO', label: 'Retiro' },
+  { value: 'TRANSFERENCIA', label: 'Transferencia' }
+]
+
+export function etiquetaTipoTransaccion(codigo) {
+  return TIPOS_TRANSACCION.find((t) => t.value === codigo)?.label ?? codigo
+}
+
+export function etiquetaTipoMovimiento(codigo) {
+  if (codigo === 'DEBITO') return 'Débito'
+  if (codigo === 'CREDITO') return 'Crédito'
+  return codigo
+}

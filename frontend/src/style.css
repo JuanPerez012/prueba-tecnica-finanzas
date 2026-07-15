@@ -700,3 +700,21 @@ button {
 .toast__cerrar:hover {
   color: var(--color-ink);
 }
+
+.badge--consignacion {
+  color: var(--color-green);
+  background: var(--color-green-soft);
+  border-color: var(--color-green);
+}
+
+.badge--retiro {
+  color: var(--color-red);
+  background: var(--color-red-soft);
+  border-color: var(--color-red);
+}
+
+.badge--transferencia {
+  color: var(--color-brass-dark);
+  background: var(--color-brass-soft);
+  border-color: var(--color-brass);
+}
