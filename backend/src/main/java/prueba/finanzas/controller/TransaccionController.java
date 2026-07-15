@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import prueba.finanzas.service.TransaccionService;
+import prueba.finanzas.service.transaccion.TransaccionService;
 
 import java.net.URI;
 import java.util.List;

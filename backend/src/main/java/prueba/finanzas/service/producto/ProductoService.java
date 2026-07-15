@@ -1,4 +1,4 @@
-package prueba.finanzas.service;
+package prueba.finanzas.service.producto;
 
 import prueba.finanzas.dto.producto.ProductoCreateRequest;
 import prueba.finanzas.dto.producto.ProductoResponse;
@@ -17,6 +17,4 @@ public interface ProductoService {
     List<ProductoResponse> obtenerPorCliente(Long clienteId);
 
     ProductoResponse actualizar(Long id, ProductoUpdateRequest request);
-
-    void eliminar(Long id);
 }

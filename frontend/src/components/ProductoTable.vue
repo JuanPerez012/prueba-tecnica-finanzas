@@ -11,24 +11,27 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  eliminandoId: {
-    type: [Number, String, null],
-    default: null
-  },
   idSeleccionado: {
     type: [Number, String, null],
     default: null
   }
 })
 
-const emit = defineEmits(['editar', 'eliminar'])
+const emit = defineEmits(['editar'])
 
 const busqueda = ref('')
+const mostrarCanceladas = ref(false)
+
+const canceladasOcultas = computed(
+  () => !mostrarCanceladas.value && props.productos.some((p) => p.estado === 'CANCELADA')
+)
 
 const productosFiltrados = computed(() => {
+  const base = mostrarCanceladas.value ? props.productos : props.productos.filter((p) => p.estado !== 'CANCELADA')
+
   const q = busqueda.value.trim().toLowerCase()
-  if (!q) return props.productos
-  return props.productos.filter((p) => {
+  if (!q) return base
+  return base.filter((p) => {
     return (
       p.numeroCuenta.toLowerCase().includes(q) ||
       p.clienteNombreCompleto?.toLowerCase().includes(q) ||
@@ -48,14 +51,24 @@ const productosFiltrados = computed(() => {
           {{ productosFiltrados.length === 1 ? 'registro' : 'registros' }}
         </span>
       </div>
-      <input
-        v-model="busqueda"
-        type="search"
-        class="ledger__search"
-        placeholder="Buscar por número de cuenta, cliente o identificación…"
-        aria-label="Buscar productos"
-      />
+      <div class="ledger__toolbar-controls">
+        <label class="checkbox checkbox--inline">
+          <input v-model="mostrarCanceladas" type="checkbox" />
+          Mostrar canceladas
+        </label>
+        <input
+          v-model="busqueda"
+          type="search"
+          class="ledger__search"
+          placeholder="Buscar por número de cuenta, cliente o identificación…"
+          aria-label="Buscar productos"
+        />
+      </div>
     </div>
+
+    <p v-if="canceladasOcultas" class="ledger__hint">
+      Hay cuentas canceladas ocultas. Actívalas con «Mostrar canceladas» para verlas.
+    </p>
 
     <div v-if="cargando" class="ledger__state">Cargando registros…</div>
 
@@ -68,15 +81,15 @@ const productosFiltrados = computed(() => {
       <table class="ledger__table">
         <colgroup>
           <col style="width: 7%" />
-          <col style="width: 11%" />
           <col style="width: 12%" />
+          <col style="width: 13%" />
           <col style="width: 9%" />
           <col style="width: 11%" />
           <col style="width: 8%" />
           <col style="width: 12%" />
           <col style="width: 12%" />
           <col style="width: 12%" />
-          <col style="width: 150px" />
+          <col style="width: 90px" />
         </colgroup>
         <thead>
           <tr>
@@ -96,7 +109,7 @@ const productosFiltrados = computed(() => {
           <tr
             v-for="p in productosFiltrados"
             :key="p.id"
-            :class="{ 'ledger__row--activo': p.id === idSeleccionado }"
+            :class="{ 'ledger__row--activo': p.id === idSeleccionado, 'ledger__row--cancelada': p.estado === 'CANCELADA' }"
           >
             <td>
               <span class="stamp">{{ idConsecutivo(p.id) }}</span>
@@ -118,15 +131,15 @@ const productosFiltrados = computed(() => {
             </td>
             <td class="ledger__celda-acciones">
               <div class="ledger__acciones">
-                <button type="button" class="btn btn--ghost btn--small" @click="emit('editar', p)">Editar</button>
                 <button
+                  v-if="p.estado !== 'CANCELADA'"
                   type="button"
-                  class="btn btn--danger btn--small"
-                  :disabled="eliminandoId === p.id"
-                  @click="emit('eliminar', p)"
+                  class="btn btn--ghost btn--small"
+                  @click="emit('editar', p)"
                 >
-                  {{ eliminandoId === p.id ? 'Eliminando…' : 'Eliminar' }}
+                  Editar
                 </button>
+                <span v-else class="ledger__cell-correo">Sin cambios</span>
               </div>
             </td>
           </tr>

@@ -12,6 +12,10 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
+  productos: {
+    type: Array,
+    default: () => []
+  },
   cargando: {
     type: Boolean,
     default: false
@@ -19,11 +23,31 @@ const props = defineProps({
 })
 
 const busqueda = ref('')
+const mostrarDeCanceladas = ref(false)
+
+const idsCuentasCanceladas = computed(
+  () => new Set(props.productos.filter((p) => p.estado === 'CANCELADA').map((p) => p.id))
+)
+
+function involucraCuentaCancelada(transaccion) {
+  return (
+    idsCuentasCanceladas.value.has(transaccion.productoOrigenId) ||
+    idsCuentasCanceladas.value.has(transaccion.productoDestinoId)
+  )
+}
+
+const hayOcultasPorCancelacion = computed(
+  () => !mostrarDeCanceladas.value && props.transacciones.some(involucraCuentaCancelada)
+)
 
 const transaccionesFiltradas = computed(() => {
+  const base = mostrarDeCanceladas.value
+    ? props.transacciones
+    : props.transacciones.filter((t) => !involucraCuentaCancelada(t))
+
   const q = busqueda.value.trim().toLowerCase()
-  if (!q) return props.transacciones
-  return props.transacciones.filter((t) => {
+  if (!q) return base
+  return base.filter((t) => {
     return (
       etiquetaTipoTransaccion(t.tipoTransaccion).toLowerCase().includes(q) ||
       t.productoOrigenNumeroCuenta?.toLowerCase().includes(q) ||
@@ -49,14 +73,24 @@ function saldoResultante(transaccion, productoId) {
           {{ transaccionesFiltradas.length === 1 ? 'registro' : 'registros' }}
         </span>
       </div>
-      <input
-        v-model="busqueda"
-        type="search"
-        class="ledger__search"
-        placeholder="Buscar por tipo, número de cuenta o descripción…"
-        aria-label="Buscar transacciones"
-      />
+      <div class="ledger__toolbar-controls">
+        <label class="checkbox checkbox--inline">
+          <input v-model="mostrarDeCanceladas" type="checkbox" />
+          Mostrar de cuentas canceladas
+        </label>
+        <input
+          v-model="busqueda"
+          type="search"
+          class="ledger__search"
+          placeholder="Buscar por tipo, número de cuenta o descripción…"
+          aria-label="Buscar transacciones"
+        />
+      </div>
     </div>
+
+    <p v-if="hayOcultasPorCancelacion" class="ledger__hint">
+      Hay movimientos de cuentas canceladas ocultos. Actívalos con «Mostrar de cuentas canceladas» para verlos.
+    </p>
 
     <div v-if="cargando" class="ledger__state">Cargando registros…</div>
 

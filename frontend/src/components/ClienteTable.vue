@@ -39,7 +39,7 @@ const clientesFiltrados = computed(() => {
   <section class="ledger" aria-labelledby="ledger-title">
     <div class="ledger__toolbar">
       <div class="ledger__heading">
-        <h2 id="ledger-title" class="ledger__title">Registros</h2>
+        <h2 id="ledger-title" class="ledger__title">Clientes</h2>
         <span class="ledger__tally" aria-live="polite">
           {{ clientesFiltrados.length }}{{ busqueda ? ` de ${clientes.length}` : '' }}
           {{ clientesFiltrados.length === 1 ? 'registro' : 'registros' }}
@@ -75,7 +75,7 @@ const clientesFiltrados = computed(() => {
       </colgroup>
       <thead>
         <tr>
-          <th scope="col">Registro</th>
+          <th scope="col">ID</th>
           <th scope="col">Cliente</th>
           <th scope="col">Identificación</th>
           <th scope="col">Correo</th>
