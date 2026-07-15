@@ -42,7 +42,7 @@ const productosFiltrados = computed(() => {
   <section class="ledger" aria-labelledby="ledger-title">
     <div class="ledger__toolbar">
       <div class="ledger__heading">
-        <h2 id="ledger-title" class="ledger__title">Registros</h2>
+        <h2 id="ledger-title" class="ledger__title">Productos</h2>
         <span class="ledger__tally" aria-live="polite">
           {{ productosFiltrados.length }}{{ busqueda ? ` de ${productos.length}` : '' }}
           {{ productosFiltrados.length === 1 ? 'registro' : 'registros' }}

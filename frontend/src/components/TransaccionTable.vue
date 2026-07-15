@@ -43,7 +43,7 @@ function saldoResultante(transaccion, productoId) {
   <section class="ledger" aria-labelledby="ledger-title">
     <div class="ledger__toolbar">
       <div class="ledger__heading">
-        <h2 id="ledger-title" class="ledger__title">Movimientos</h2>
+        <h2 id="ledger-title" class="ledger__title">Transacciones</h2>
         <span class="ledger__tally" aria-live="polite">
           {{ transaccionesFiltradas.length }}{{ busqueda ? ` de ${transacciones.length}` : '' }}
           {{ transaccionesFiltradas.length === 1 ? 'registro' : 'registros' }}
@@ -78,7 +78,7 @@ function saldoResultante(transaccion, productoId) {
         </colgroup>
         <thead>
           <tr>
-            <th scope="col">Folio</th>
+            <th scope="col">ID</th>
             <th scope="col">Tipo</th>
             <th scope="col">Monto</th>
             <th scope="col">Cuenta origen</th>

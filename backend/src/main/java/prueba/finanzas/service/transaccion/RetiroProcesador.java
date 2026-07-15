@@ -32,7 +32,7 @@ public class RetiroProcesador extends AbstractProcesadorTransaccion {
             throw new BusinessRuleException("El retiro no debe indicar cuenta destino");
         }
 
-        Producto origen = buscarProductoOLanzarExcepcion(request.getProductoOrigenId());
+        Producto origen = bloquearProductoOLanzarExcepcion(request.getProductoOrigenId());
         validarCuentaActiva(origen);
 
         BigDecimal saldoResultante = debitar(origen, request.getMonto());

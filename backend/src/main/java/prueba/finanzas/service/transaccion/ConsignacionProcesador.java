@@ -32,7 +32,7 @@ public class ConsignacionProcesador extends AbstractProcesadorTransaccion {
             throw new BusinessRuleException("La consignación no debe indicar cuenta origen");
         }
 
-        Producto destino = buscarProductoOLanzarExcepcion(request.getProductoDestinoId());
+        Producto destino = bloquearProductoOLanzarExcepcion(request.getProductoDestinoId());
         validarCuentaActiva(destino);
 
         BigDecimal saldoResultante = acreditar(destino, request.getMonto());

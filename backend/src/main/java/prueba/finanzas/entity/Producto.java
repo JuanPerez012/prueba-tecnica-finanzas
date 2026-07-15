@@ -51,6 +51,10 @@ public class Producto {
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
+    @Version
+    @Column(name = "version", nullable = false)
+    private Long version;
+
     @PrePersist
     protected void alPersistir() {
         LocalDateTime ahora = LocalDateTime.now();

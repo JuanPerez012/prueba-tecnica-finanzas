@@ -25,17 +25,27 @@ public class TransferenciaProcesador extends AbstractProcesadorTransaccion {
 
     @Override
     public Transaccion procesar(TransaccionCreateRequest request) {
-        if (request.getProductoOrigenId() == null || request.getProductoDestinoId() == null) {
+        Long idOrigen = request.getProductoOrigenId();
+        Long idDestino = request.getProductoDestinoId();
+
+        if (idOrigen == null || idDestino == null) {
             throw new BusinessRuleException(
                 "La transferencia requiere cuenta origen (productoOrigenId) y cuenta destino (productoDestinoId)"
             );
         }
-        if (request.getProductoOrigenId().equals(request.getProductoDestinoId())) {
+        if (idOrigen.equals(idDestino)) {
             throw new BusinessRuleException("La cuenta origen y la cuenta destino no pueden ser la misma");
         }
 
-        Producto origen = buscarProductoOLanzarExcepcion(request.getProductoOrigenId());
-        Producto destino = buscarProductoOLanzarExcepcion(request.getProductoDestinoId());
+        Long idMenor = Math.min(idOrigen, idDestino);
+        Long idMayor = Math.max(idOrigen, idDestino);
+
+        Producto cuentaIdMenor = bloquearProductoOLanzarExcepcion(idMenor);
+        Producto cuentaIdMayor = bloquearProductoOLanzarExcepcion(idMayor);
+
+        Producto origen = idOrigen.equals(idMenor) ? cuentaIdMenor : cuentaIdMayor;
+        Producto destino = idDestino.equals(idMenor) ? cuentaIdMenor : cuentaIdMayor;
+
         validarCuentaActiva(origen);
         validarCuentaActiva(destino);
 
