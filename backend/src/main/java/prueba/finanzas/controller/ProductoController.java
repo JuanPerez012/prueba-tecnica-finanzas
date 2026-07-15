@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import prueba.finanzas.service.ProductoService;
+import prueba.finanzas.service.producto.ProductoService;
 
 import java.net.URI;
 import java.util.List;

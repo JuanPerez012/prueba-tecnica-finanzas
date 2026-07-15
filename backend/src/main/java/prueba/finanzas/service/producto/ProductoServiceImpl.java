@@ -1,4 +1,4 @@
-package prueba.finanzas.service;
+package prueba.finanzas.service.producto;
 
 import prueba.finanzas.entity.Cliente;
 import prueba.finanzas.entity.Producto;
