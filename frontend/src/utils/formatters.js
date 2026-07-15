@@ -43,3 +43,47 @@ export function formatFechaHora(fechaISO) {
 export function idConsecutivo(id) {
   return `#${String(id).padStart(5, '0')}`
 }
+
+export const TIPOS_CUENTA = [
+  { value: 'AHORROS', label: 'Cuenta de Ahorros' },
+  { value: 'CORRIENTE', label: 'Cuenta Corriente' }
+]
+
+export function etiquetaTipoCuenta(codigo) {
+  return TIPOS_CUENTA.find((t) => t.value === codigo)?.label ?? codigo
+}
+
+export const ESTADOS_CUENTA = [
+  { value: 'ACTIVA', label: 'Activa' },
+  { value: 'INACTIVA', label: 'Inactiva' },
+  { value: 'CANCELADA', label: 'Cancelada' }
+]
+
+export function etiquetaEstadoCuenta(codigo) {
+  return ESTADOS_CUENTA.find((e) => e.value === codigo)?.label ?? codigo
+}
+
+export function formatMoneda(valor) {
+  if (valor === null || valor === undefined) return '—'
+  return new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0
+  }).format(valor)
+}
+
+export const TIPOS_TRANSACCION = [
+  { value: 'CONSIGNACION', label: 'Consignación' },
+  { value: 'RETIRO', label: 'Retiro' },
+  { value: 'TRANSFERENCIA', label: 'Transferencia' }
+]
+
+export function etiquetaTipoTransaccion(codigo) {
+  return TIPOS_TRANSACCION.find((t) => t.value === codigo)?.label ?? codigo
+}
+
+export function etiquetaTipoMovimiento(codigo) {
+  if (codigo === 'DEBITO') return 'Débito'
+  if (codigo === 'CREDITO') return 'Crédito'
+  return codigo
+}

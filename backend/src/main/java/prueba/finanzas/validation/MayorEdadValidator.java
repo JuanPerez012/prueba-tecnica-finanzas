@@ -17,7 +17,6 @@ public class MayorEdadValidator implements ConstraintValidator<MayorEdad, LocalD
 
     @Override
     public boolean isValid(LocalDate fechaNacimiento, ConstraintValidatorContext context) {
-        // Si es null, dejamos que @NotNull se encargue de reportar el error.
         if (fechaNacimiento == null) {
             return true;
         }

@@ -1,7 +1,17 @@
-<script setup></script>
+<script setup>
+import { RouterLink, useRoute } from 'vue-router'
+
+const route = useRoute()
+</script>
 
 <template>
   <header class="app-header">
-    <h1 class="app-header__title">Libro de Clientes</h1>
+    <RouterLink to="/" class="app-header__title">Libro de Clientes</RouterLink>
+
+    <nav v-if="route.name !== 'inicio'" class="app-header__nav" aria-label="Navegación principal">
+      <RouterLink to="/clientes" class="app-header__link">Clientes</RouterLink>
+      <RouterLink to="/productos" class="app-header__link">Productos</RouterLink>
+      <RouterLink to="/transacciones" class="app-header__link">Transacciones</RouterLink>
+    </nav>
   </header>
 </template>
