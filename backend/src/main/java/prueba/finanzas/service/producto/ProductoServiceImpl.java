@@ -99,27 +99,13 @@ public class ProductoServiceImpl implements ProductoService {
         return productoMapper.toResponse(actualizado);
     }
 
-    @Override
-    @Transactional
-    public void eliminar(Long id) {
-        Producto producto = buscarProductoOLanzarExcepcion(id);
-
-        if (producto.getSaldo().compareTo(BigDecimal.ZERO) != 0) {
-            throw new BusinessRuleException(
-                "No se puede eliminar la cuenta " + producto.getNumeroCuenta() + " porque su saldo no está en $0"
-            );
-        }
-
-        productoRepository.delete(producto);
-    }
-
     private Producto buscarProductoOLanzarExcepcion(Long id) {
         return productoRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
     }
 
-    private void validarSaldoParaTipoCuenta(TipoCuenta tipoCuenta, BigDecimal saldo) {
-        if (tipoCuenta == TipoCuenta.AHORROS && saldo.compareTo(BigDecimal.ZERO) < 0) {
+    private void validarSaldoParaTipoCuenta(TipoCuenta tipoCuenta, BigDecimal saldoInicial) {
+        if (tipoCuenta == TipoCuenta.AHORROS && saldoInicial.compareTo(BigDecimal.ZERO) < 0) {
             throw new BusinessRuleException("Una cuenta de ahorros no puede tener saldo menor a $0");
         }
     }

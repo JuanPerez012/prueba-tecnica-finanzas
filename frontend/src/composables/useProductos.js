@@ -7,7 +7,6 @@ export function useProductos() {
   const productos = ref([])
   const cargando = ref(false)
   const guardando = ref(false)
-  const eliminandoId = ref(null)
   const toast = useToast()
 
   async function cargar() {
@@ -52,20 +51,6 @@ export function useProductos() {
     }
   }
 
-  async function eliminar(producto) {
-    eliminandoId.value = producto.id
-    try {
-      await productoApi.eliminar(producto.id)
-      productos.value = productos.value.filter((p) => p.id !== producto.id)
-      toast.exito(`Cuenta ${producto.numeroCuenta} eliminada`)
-    } catch (err) {
-      reportarError('No se pudo eliminar el producto', err)
-      throw err
-    } finally {
-      eliminandoId.value = null
-    }
-  }
-
   function reportarError(mensajeGenerico, err) {
     if (err instanceof ApiError) {
       toast.error(err.message || mensajeGenerico, err.detalles)
@@ -74,5 +59,5 @@ export function useProductos() {
     }
   }
 
-  return { productos, cargando, guardando, eliminandoId, cargar, crear, actualizar, eliminar }
+  return { productos, cargando, guardando, cargar, crear, actualizar }
 }

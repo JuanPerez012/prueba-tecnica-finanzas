@@ -17,6 +17,4 @@ public interface ProductoService {
     List<ProductoResponse> obtenerPorCliente(Long clienteId);
 
     ProductoResponse actualizar(Long id, ProductoUpdateRequest request);
-
-    void eliminar(Long id);
 }

@@ -5,7 +5,6 @@ import prueba.finanzas.dto.producto.ProductoResponse;
 import prueba.finanzas.dto.producto.ProductoUpdateRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import prueba.finanzas.service.producto.ProductoService;
@@ -48,11 +47,5 @@ public class ProductoController {
         @Valid @RequestBody ProductoUpdateRequest request
     ) {
         return ResponseEntity.ok(productoService.actualizar(id, request));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        productoService.eliminar(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
