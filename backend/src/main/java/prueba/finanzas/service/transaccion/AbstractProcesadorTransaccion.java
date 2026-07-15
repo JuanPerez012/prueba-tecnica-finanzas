@@ -20,8 +20,8 @@ public abstract class AbstractProcesadorTransaccion implements ProcesadorTransac
         this.productoRepository = productoRepository;
     }
 
-    protected Producto buscarProductoOLanzarExcepcion(Long id) {
-        return productoRepository.findById(id)
+    protected Producto bloquearProductoOLanzarExcepcion(Long id) {
+        return productoRepository.bloquearPorId(id)
             .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
     }
 

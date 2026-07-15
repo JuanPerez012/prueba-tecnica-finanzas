@@ -1,8 +1,10 @@
 package prueba.finanzas.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,6 +28,26 @@ public class GlobalExceptionHandler {
             HttpStatus.UNPROCESSABLE_ENTITY.value(), "Business Rule Violation", ex.getMessage(), req.getRequestURI()
         );
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(body);
+    }
+
+    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
+    public ResponseEntity<ErrorResponse> handleOptimisticLock(ObjectOptimisticLockingFailureException ex, HttpServletRequest req) {
+        ErrorResponse body = new ErrorResponse(
+            HttpStatus.CONFLICT.value(), "Concurrent Modification",
+            "La cuenta fue modificada por otra operación al mismo tiempo. Intenta la operación nuevamente.",
+            req.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
+
+    @ExceptionHandler(PessimisticLockingFailureException.class)
+    public ResponseEntity<ErrorResponse> handlePessimisticLock(PessimisticLockingFailureException ex, HttpServletRequest req) {
+        ErrorResponse body = new ErrorResponse(
+            HttpStatus.CONFLICT.value(), "Concurrent Modification",
+            "La cuenta está siendo utilizada en otra transacción simultánea. Intenta la operación nuevamente.",
+            req.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
