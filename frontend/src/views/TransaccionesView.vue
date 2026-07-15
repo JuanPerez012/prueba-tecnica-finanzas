@@ -28,7 +28,7 @@ async function alEnviarFormulario(payload) {
     <div class="app-layout">
       <TransaccionForm :productos="productos" :guardando="guardando" @submit="alEnviarFormulario" />
 
-      <TransaccionTable :transacciones="transacciones" :cargando="cargando" />
+      <TransaccionTable :transacciones="transacciones" :productos="productos" :cargando="cargando" />
     </div>
   </div>
 </template>
