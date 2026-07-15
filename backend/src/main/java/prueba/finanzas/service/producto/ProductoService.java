@@ -1,4 +1,4 @@
-package prueba.finanzas.service;
+package prueba.finanzas.service.producto;
 
 import prueba.finanzas.dto.producto.ProductoCreateRequest;
 import prueba.finanzas.dto.producto.ProductoResponse;

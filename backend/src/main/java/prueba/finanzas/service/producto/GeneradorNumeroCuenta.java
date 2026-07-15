@@ -1,4 +1,4 @@
-package prueba.finanzas.service;
+package prueba.finanzas.service.producto;
 
 import prueba.finanzas.repository.ProductoRepository;
 import prueba.finanzas.enums.TipoCuenta;
