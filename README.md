@@ -12,7 +12,7 @@ La aplicación permite a los trabajadores de la entidad financiera:
 - **Gestionar productos financieros**: crear cuentas de ahorro o cuentas corrientes asociadas a un cliente existente, activarlas/inactivarlas y cancelarlas cuando corresponda.
 - **Registrar transacciones**: realizar consignaciones, retiros y transferencias entre cuentas, actualizando automáticamente los saldos involucrados.
 
-### 1.1 Clientes
+### Clientes
 
 | Atributo | Descripción |
 |---|---|
@@ -29,7 +29,7 @@ La aplicación permite a los trabajadores de la entidad financiera:
 - No se puede eliminar un cliente que tenga productos financieros asociados.
 - Las fechas de creación y modificación se calculan automáticamente.
 
-### 1.2 Productos (cuentas)
+### Productos (cuentas)
 
 | Atributo | Descripción |
 |---|---|
@@ -50,7 +50,7 @@ La aplicación permite a los trabajadores de la entidad financiera:
 - Solo se pueden cancelar cuentas con saldo igual a `$0`.
 - El saldo se actualiza automáticamente después de cada transacción exitosa.
 
-### 1.3 Transacciones
+### Transacciones
 
 Tipos soportados: **consignación**, **retiro** y **transferencia entre cuentas**.
 
@@ -143,7 +143,7 @@ Para ejecutarlas con Docker (Carpeta backend):
 docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
 ```
 
-### 5.3 Ejecución en desarrollo
+## 6. Ejecución de módulos
 
 **Base de datos (Carpeta backend):**
 
@@ -169,3 +169,32 @@ npm run dev
 ```
 
 La aplicación queda disponible en la URL que indique Vite (por defecto `http://localhost:5173`).
+
+---
+
+## 7. Despliegue en la nube (Azure)
+
+La aplicación está desplegada en Microsoft Azure, con cada módulo montado en su propio servicio:
+
+| Módulo | Servicio de Azure |
+|---|---|---|
+| **Frontend** | Azure Static Web Apps |
+| **Backend** | Azure App Service (JAR, sin Docker) |
+| **Base de datos** | Azure Database for MySQL – Flexible Server |
+
+**Aplicación en línea:** [https://lemon-flower-0feeb010f.7.azurestaticapps.net](https://lemon-flower-0feeb010f.7.azurestaticapps.net)
+
+### Arquitectura de despliegue
+
+```
+Usuario
+   │
+   ▼
+Azure Static Web Apps (frontend Vue 3 / Vite)
+   │  HTTPS · REST (api)
+   ▼
+Azure App Service (backend Spring Boot, JAR ejecutable)
+   │  JDBC · SSL requerido
+   ▼
+Azure Database for MySQL – Flexible Server
+```
